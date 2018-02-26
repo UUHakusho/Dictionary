@@ -5,14 +5,78 @@
  */
 package dsacoursework2;
 
+import java.util.Arrays;
+
 /**
  *
  * @author pdu15gsu
  */
-public class Trie {
+public class Trie extends TrieNode{
     private TrieNode root;
     
     public Trie(){
-        this.root = null;
+        this.root = new TrieNode();
+        
+    }
+    
+    public TrieNode getRoot(){
+        return root;
+    }
+    
+    public void add(String key){
+        TrieNode current = root;
+        for(int i = 0; i < key.length(); i++){
+            char c = key.charAt(i);
+            if(current.getOffspring()[getIndex(c)] == null){
+                current.addChild(c);
+            }
+            if(i==key.length()-1){
+                current.setComplete(true);
+            }
+            current = current.getOffspring()[getIndex(c)];
+        }
+    }
+    
+    public boolean contains(String key){
+        TrieNode node = root;
+        
+        for(int i = 0; i < key.length(); i++){
+            char c = key.charAt(i);
+            if(node.getOffspring().contains(c))
+                for()
+        }
+        //while(!node.isComplete());
+            
+        
+    }
+    
+    @Override
+    public String toString(){
+        String newLine = System.getProperty("line.separator");
+        StringBuilder str = new StringBuilder();
+        str.append("ROOT NODE").append(newLine);
+        str.append(root.toString()).append(newLine);
+        
+        str.append("OFFSPRING");
+        for(TrieNode node : this.root.getOffspring()){
+            if(node != null){
+                str.append(newLine);
+                str.append(node.toString());
+            }
+                
+        }
+        return str.toString();
+    }
+    
+    public static void main(String[] args) throws Exception {
+        Trie trie = new Trie();
+        trie.add("cheers");
+        trie.add("cheese");
+        trie.add("chat");
+        trie.add("cat");
+        trie.add("bat");
+        System.out.println(trie.toString());
+        
+        
     }
 }

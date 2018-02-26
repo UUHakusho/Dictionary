@@ -31,23 +31,33 @@ public class TrieNode {
         this.parent = parent;
     }
     
-    public void addChild(char newNode){
-        int charVal = (int)(newNode)-97;
-        this.offspring[charVal] = new TrieNode();
-        this.offspring[charVal].setC('a');
+    public void addChild(char nodeChar){
+        int index = getIndex(nodeChar);
+        TrieNode node = getChild(nodeChar);
+
+            this.offspring[index] = new TrieNode();
+            this.offspring[index].setC(nodeChar);
+
     }
     
     @Override
     public String toString(){
         String newLine = System.getProperty("line.separator");
         StringBuilder str = new StringBuilder();
-        str.append("Current Node: ").append(this.c).append(newLine);
-        str.append("Offspring: ");
+        str.append("Current Node: ");
+        if(this.c == '\u0000')
+            str.append("null");
+        else{
+            str.append(this.c);
+        }
+        str.append(newLine).append("Offspring: ");
         for(TrieNode node : this.offspring){
             if(node != null){
-                str.append(node.getC());
+                str.append(node.getC());                
             }
+            
         }
+            
         str.append(newLine);
         return str.toString();
     }
@@ -57,6 +67,10 @@ public class TrieNode {
      */
     public TrieNode[] getOffspring() {
         return offspring;
+    }
+    
+    public TrieNode getChild(char c){
+        return this.offspring[(int)(c)-97];
     }
     
     /**
@@ -100,7 +114,9 @@ public class TrieNode {
     public char getC() {
         return c;
     }
-
+    public static int getIndex(char c){
+        return (int)(c)-97;
+    }
     /**
      * @param c the c to set
      */
@@ -113,6 +129,10 @@ public class TrieNode {
        TrieNode node = new TrieNode();
        node.setC('b');
        node.addChild('c');
+       node.addChild('z');
+       
        System.out.println(node.toString());
+       
+       System.out.println(node.offspring[2].toString());
     }
 }
