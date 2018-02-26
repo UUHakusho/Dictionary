@@ -39,15 +39,22 @@ public class Trie extends TrieNode{
     
     public boolean contains(String key){
         TrieNode node = root;
-        
+        TrieNode[] offspring;
         for(int i = 0; i < key.length(); i++){
+            offspring = node.getOffspring();
             char c = key.charAt(i);
-            if(node.getOffspring().contains(c))
-                for()
-        }
-        //while(!node.isComplete());
+            System.out.println(i);
+            if(offspring[getIndex(c)] == null){
+                return false;
+            }
+            if(node.isComplete()){
+                return true;
+            }
             
-        
+            node = offspring[getIndex(c)];
+            
+        }
+        return false;        
     }
     
     @Override
@@ -76,7 +83,7 @@ public class Trie extends TrieNode{
         trie.add("cat");
         trie.add("bat");
         System.out.println(trie.toString());
-        
+        System.out.println(trie.contains("chat"));
         
     }
 }
