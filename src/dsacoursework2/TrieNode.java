@@ -55,9 +55,7 @@ public class TrieNode {
             if(node != null){
                 str.append(node.getC());                
             }
-            
         }
-            
         str.append(newLine);
         return str.toString();
     }

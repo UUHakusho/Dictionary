@@ -23,38 +23,58 @@ public class Trie extends TrieNode{
         return root;
     }
     
+    public void setRoot(TrieNode node){
+        this.root = node;
+    }
+    
     public void add(String key){
-        TrieNode current = root;
+        TrieNode node = root;
         for(int i = 0; i < key.length(); i++){
             char c = key.charAt(i);
-            if(current.getOffspring()[getIndex(c)] == null){
-                current.addChild(c);
+            if(node.getChild(c) == null){
+                node.addChild(c);
             }
             if(i==key.length()-1){
-                current.setComplete(true);
+                node.setComplete(true);
             }
-            current = current.getOffspring()[getIndex(c)];
+            node= node.getChild(c);
         }
     }
     
     public boolean contains(String key){
         TrieNode node = root;
-        TrieNode[] offspring;
         for(int i = 0; i < key.length(); i++){
-            offspring = node.getOffspring();
             char c = key.charAt(i);
-            System.out.println(i);
-            if(offspring[getIndex(c)] == null){
+            if(node.getChild(c) == null){
                 return false;
             }
             if(node.isComplete()){
                 return true;
             }
-            
-            node = offspring[getIndex(c)];
-            
+            node = node.getChild(c);
         }
         return false;        
+    }
+    
+    public String outputBreadthFirstSearch(){
+        return null;
+    }
+    
+    public Trie getSubTrie(String prefix){
+        TrieNode node = root;
+        for(int i = 0; i < prefix.length(); i++){
+            char c = prefix.charAt(i);
+            if(node.getChild(c) == null){
+                return null;
+            }
+            else{
+                node = node.getChild(c);
+            }
+            
+        }
+        Trie trie = new Trie();
+        trie.setRoot(node);
+        return trie;
     }
     
     @Override
@@ -69,8 +89,7 @@ public class Trie extends TrieNode{
             if(node != null){
                 str.append(newLine);
                 str.append(node.toString());
-            }
-                
+            }      
         }
         return str.toString();
     }
@@ -82,8 +101,8 @@ public class Trie extends TrieNode{
         trie.add("chat");
         trie.add("cat");
         trie.add("bat");
-        System.out.println(trie.toString());
-        System.out.println(trie.contains("chat"));
+        //System.out.println(trie.toString());
+        System.out.println(trie.getSubTrie("ch").toString());
         
     }
 }
