@@ -83,7 +83,6 @@ public class Trie extends TrieNode{
         StringBuilder str = new StringBuilder();
         str.append("ROOT NODE").append(newLine);
         str.append(root.toString()).append(newLine);
-        
         str.append("OFFSPRING");
         for(TrieNode node : this.root.getOffspring()){
             if(node != null){
