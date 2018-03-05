@@ -5,6 +5,8 @@
  */
 package dsacoursework2;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,25 +23,23 @@ public class TrieNode {
         this.c = '\u0000';
         this.offspring = new TrieNode[26];
         this.complete = false;
-        this.parent = null;
     }
     
-    public TrieNode(char c, TrieNode[] list, boolean flag, TrieNode parent){
+    public TrieNode(char c, TrieNode[] list, boolean flag){
         this.c = c;
         this.offspring = list;
         this.complete = flag;
-        this.parent = parent;
     }
     
     public void addChild(char nodeChar){
         int index = getIndex(nodeChar);
         TrieNode node = getChild(nodeChar);
-
-            this.offspring[index] = new TrieNode();
-            this.offspring[index].setC(nodeChar);
-
+        this.offspring[index] = new TrieNode();
+        this.offspring[index].setC(nodeChar);
     }
     
+    
+    /*
     @Override
     public String toString(){
         String newLine = System.getProperty("line.separator");
@@ -59,6 +59,11 @@ public class TrieNode {
         str.append(newLine);
         return str.toString();
     }
+    */
+    @Override
+    public String toString(){
+        return Character.toString(this.getC());
+    }
     
     /**
      * @return the offspring
@@ -71,12 +76,7 @@ public class TrieNode {
         return this.offspring[(int)(c)-97];
     }
     
-    /**
-     * @return the parent
-     */
-    public TrieNode getParent() {
-        return parent;
-    }
+   
     
     /**
      * @param offspring the offspring to set
@@ -85,12 +85,7 @@ public class TrieNode {
         this.offspring = offspring;
     }
     
-    /**
-     * @param parent the parent to set
-     */
-    public void setParent(TrieNode parent) {
-        this.parent = parent;
-    }
+   
 
     /**
      * @return the complete

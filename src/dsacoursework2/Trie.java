@@ -5,7 +5,11 @@
  */
 package dsacoursework2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -56,8 +60,21 @@ public class Trie extends TrieNode{
         return false;        
     }
     
+
     public String outputBreadthFirstSearch(){
-        return null;
+        StringBuilder str = new StringBuilder();
+        TrieNode[] layer = this.root.getOffspring();
+        while(layer.length != 0){
+            ArrayList<TrieNode> temp = new ArrayList<>();
+            for(TrieNode node : layer){
+                if(node != null){
+                    str.append(node);
+                    temp.addAll(Arrays.asList(node.getOffspring()));
+                } 
+            }
+            layer =  temp.toArray(new TrieNode[temp.size()]);
+        }
+        return str.toString();
     }
     
     public Trie getSubTrie(String prefix){
@@ -101,7 +118,7 @@ public class Trie extends TrieNode{
         trie.add("cat");
         trie.add("bat");
         //System.out.println(trie.toString());
-        System.out.println(trie.getSubTrie("ch").toString());
+        System.out.println(trie.outputBreadthFirstSearch());
         
     }
 }
