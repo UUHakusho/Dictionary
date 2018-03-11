@@ -59,8 +59,7 @@ public class Trie extends TrieNode{
         }
         return false;        
     }
-    
-
+   
     public String outputBreadthFirstSearch(){
         StringBuilder str = new StringBuilder();
         TrieNode[] layer = this.root.getOffspring();
@@ -77,6 +76,31 @@ public class Trie extends TrieNode{
         return str.toString();
     }
     
+    
+    /*
+    public String outputDepthFirstSearch(){
+        StringBuilder str = new StringBuilder();
+        Trie temp = this;
+        TrieNode node = temp.getRoot();
+        TrieNode parent = null;
+        boolean visited;
+        for(int i = 0; i< 5; i++){
+            TrieNode child = node.getFirstChild();
+            if(child.hasChildren()){
+                visited = false;
+                parent = node;
+                node = child; 
+            }
+            else{
+                visited = true;
+                str.append(child.toString());
+                node.removeFirstChild();
+                node = parent;
+            }
+        }
+        return str.toString();
+    }
+    */
     public Trie getSubTrie(String prefix){
         TrieNode node = root;
         for(int i = 0; i < prefix.length(); i++){
@@ -118,7 +142,7 @@ public class Trie extends TrieNode{
         trie.add("cat");
         trie.add("bat");
         //System.out.println(trie.toString());
-        System.out.println(trie.outputBreadthFirstSearch());
+        System.out.println(trie.getRoot().getFirstChild());
         
     }
 }

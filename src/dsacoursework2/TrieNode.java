@@ -38,7 +38,9 @@ public class TrieNode {
         this.offspring[index].setC(nodeChar);
     }
     
-    
+    public void removeChild(char nodeChar){
+        this.offspring[getIndex(nodeChar)] = null;
+    }
     /*
     @Override
     public String toString(){
@@ -109,6 +111,20 @@ public class TrieNode {
     }
     public static int getIndex(char c){
         return (int)(c)-97;
+    }
+    
+    public TrieNode getFirstChild(){
+        for(TrieNode node : this.getOffspring()){
+            if(node != null)
+                return node;
+        }
+        return null;
+    }
+    
+    public boolean hasChildren(){
+        if(this.getFirstChild() == null)
+            return false;
+        else return true;
     }
     /**
      * @param c the c to set
