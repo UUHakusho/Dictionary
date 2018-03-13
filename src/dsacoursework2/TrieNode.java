@@ -183,4 +183,34 @@ public class TrieNode {
        System.out.println(node.offspring[2].toString());
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @return the parent
+     */
+    public TrieNode getParent() {
+        return parent;
+    }
+
+    /**
+     * @param parent the parent to set
+     */
+    public void setParent(TrieNode parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * @return the visited
+     */
+    public boolean isVisited() {
+        return visited;
+    }
+
+    /**
+     * @param visited the visited to set
+     */
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+>>>>>>> f4c71d7ebfbeb92064643cd7075d43aff5d707dd
 }
