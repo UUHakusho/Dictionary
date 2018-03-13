@@ -17,18 +17,22 @@ public class TrieNode {
     private char c;
     private TrieNode[] offspring;
     private TrieNode parent;
-    private boolean complete;
+    private boolean complete, visited;
     
     public TrieNode(){
         this.c = '\u0000';
         this.offspring = new TrieNode[26];
         this.complete = false;
+        this.visited = false;
+        this.parent = null;
     }
     
-    public TrieNode(char c, TrieNode[] list, boolean flag){
+    public TrieNode(char c, TrieNode[] list, boolean flag,TrieNode newparent){
         this.c = c;
         this.offspring = list;
         this.complete = flag;
+        this.visited = false;
+        this.parent = newparent;
     }
     
     public void addChild(char nodeChar){
@@ -38,7 +42,9 @@ public class TrieNode {
         this.offspring[index].setC(nodeChar);
     }
     
-    
+    public void removeChild(char nodeChar){
+        this.offspring[getIndex(nodeChar)] = null;
+    }
     /*
     @Override
     public String toString(){
@@ -85,7 +91,21 @@ public class TrieNode {
         this.offspring = offspring;
     }
     
+   public boolean isLeaf(){
+       for(int i = 0; i < 26; i ++){
+           if(this.offspring[i] != null)
+               return false;
+       }
+       return true;
+   }
    
+   public TrieNode getUnvisitedChildNode (){
+       for(TrieNode node : this.getOffspring()){
+            if(node != null && !node.isVisited())
+                return node;
+        }
+       return null;
+   }
 
     /**
      * @return the complete
@@ -110,6 +130,7 @@ public class TrieNode {
     public static int getIndex(char c){
         return (int)(c)-97;
     }
+    
     /**
      * @param c the c to set
      */
@@ -127,5 +148,33 @@ public class TrieNode {
        System.out.println(node.toString());
        
        System.out.println(node.offspring[2].toString());
+    }
+
+    /**
+     * @return the parent
+     */
+    public TrieNode getParent() {
+        return parent;
+    }
+
+    /**
+     * @param parent the parent to set
+     */
+    public void setParent(TrieNode parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * @return the visited
+     */
+    public boolean isVisited() {
+        return visited;
+    }
+
+    /**
+     * @param visited the visited to set
+     */
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 }

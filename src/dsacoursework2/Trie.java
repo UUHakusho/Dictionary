@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  *
@@ -41,7 +44,8 @@ public class Trie extends TrieNode{
             if(i==key.length()-1){
                 node.setComplete(true);
             }
-            node= node.getChild(c);
+            node.getChild(c).setParent(node);
+            node = node.getChild(c);
         }
     }
     
@@ -60,19 +64,36 @@ public class Trie extends TrieNode{
         return false;        
     }
     
-
     public String outputBreadthFirstSearch(){
         StringBuilder str = new StringBuilder();
-        TrieNode[] layer = this.root.getOffspring();
-        while(layer.length != 0){
-            ArrayList<TrieNode> temp = new ArrayList<>();
-            for(TrieNode node : layer){
-                if(node != null){
-                    str.append(node);
-                    temp.addAll(Arrays.asList(node.getOffspring()));
-                } 
-            }
-            layer =  temp.toArray(new TrieNode[temp.size()]);
+        Queue<TrieNode> l = new LinkedList();
+        l.add(this.root);
+        while(!l.isEmpty()) {
+                TrieNode child = l.peek().getUnvisitedChildNode();
+                if(child != null) {
+                        child.setVisited(true);
+                        l.add(child);
+                }
+                else {
+                        str.append(l.remove().toString());
+                }
+        }
+        return str.toString();
+    }
+    
+    public String outputDepthFirstSearch(){
+        StringBuilder str = new StringBuilder();
+        Stack<TrieNode> s = new Stack();
+        s.push(this.root);
+        while(!s.isEmpty()) {
+                TrieNode child = s.peek().getUnvisitedChildNode();
+                if(child != null) {
+                        child.setVisited(true);
+                        s.push(child);
+                }
+                else {
+                        str.append(s.pop().toString());
+                }
         }
         return str.toString();
     }
@@ -118,7 +139,8 @@ public class Trie extends TrieNode{
         trie.add("cat");
         trie.add("bat");
         //System.out.println(trie.toString());
-        System.out.println(trie.outputBreadthFirstSearch());
+        System.out.println("bfs: " + trie.outputBreadthFirstSearch());
+        System.out.println("dfs: " + trie.outputBreadthFirstSearch());
         
     }
 }
