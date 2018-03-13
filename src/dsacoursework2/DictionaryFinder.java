@@ -15,14 +15,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  *
  * @author ajb
  */
 public class DictionaryFinder {
-    HashMap map;
+    private HashMap<String, Integer> map;
     ArrayList<String> list;
     
     public DictionaryFinder(){
@@ -60,21 +62,24 @@ public class DictionaryFinder {
         printWriter.close();
      }
      public void formDictionary(){
-         HashMap<String,Integer> map = new HashMap<>();
+         
          for(String word : list){
-             Integer freq = map.get(word);
-             if(freq == null)
-                this.map.put(word,1);
-             else
-                this.map.put(word, freq+1);
+             Integer freq = this.getMap().get(word);
+             if(freq == null){
+                 this.getMap().put(word,1);
+             } 
+             else{
+                 this.getMap().put(word, freq+1);
+             }   
          }
      }
      
     @Override
      public String toString(){
-         StringBuilder str = new StringBuilder(); 
-         for(Object word : map.keySet()){
-             str.append(word).append(" ").append(map.get(word));
+         StringBuilder str = new StringBuilder();
+         Map<String, Integer> treeMap = new TreeMap<>(this.getMap());
+         for(Object word : treeMap.keySet()){
+             str.append(word).append(" ").append(getMap().get(word));
              str.append(System.getProperty("line.separator"));
          }
          return str.toString();
@@ -97,6 +102,20 @@ public class DictionaryFinder {
         df.saveToFile();
         
        
+    }
+
+    /**
+     * @return the map
+     */
+    public HashMap<String, Integer> getMap() {
+        return map;
+    }
+
+    /**
+     * @param map the map to set
+     */
+    public void setMap(HashMap<String, Integer> map) {
+        this.map = map;
     }
     
 }

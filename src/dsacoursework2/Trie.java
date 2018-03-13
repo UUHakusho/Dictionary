@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  *
@@ -20,9 +23,9 @@ public class Trie extends TrieNode{
     
     public Trie(){
         this.root = new TrieNode();
-        
     }
     
+
     public TrieNode getRoot(){
         return root;
     }
@@ -31,18 +34,21 @@ public class Trie extends TrieNode{
         this.root = node;
     }
     
-    public void add(String key){
+    public boolean add(String key){
+        if(this.contains(key)){
+            return false;
+        }
         TrieNode node = root;
         for(int i = 0; i < key.length(); i++){
             char c = key.charAt(i);
             if(node.getChild(c) == null){
                 node.addChild(c);
-            }
-            if(i==key.length()-1){
-                node.setComplete(true);
-            }
-            node= node.getChild(c);
+            }    
+            node.getChild(c).setParent(node);
+            node = node.getChild(c);
         }
+        node.setComplete(true);
+        return true;
     }
     
     public boolean contains(String key){
@@ -59,48 +65,39 @@ public class Trie extends TrieNode{
         }
         return false;        
     }
-   
+    
     public String outputBreadthFirstSearch(){
         StringBuilder str = new StringBuilder();
-        TrieNode[] layer = this.root.getOffspring();
-        while(layer.length != 0){
-            ArrayList<TrieNode> temp = new ArrayList<>();
-            for(TrieNode node : layer){
-                if(node != null){
-                    str.append(node);
-                    temp.addAll(Arrays.asList(node.getOffspring()));
-                } 
-            }
-            layer =  temp.toArray(new TrieNode[temp.size()]);
+        Queue<TrieNode> q = new LinkedList();
+        q.add(this.root);
+        while(!q.isEmpty()) {
+                TrieNode child = q.peek().getUnvisitedChildNode();
+                if(child != null) {
+                        child.setVisited(true);
+                        q.add(child);
+                }
+                else
+                    str.append(q.remove().toString());
         }
         return str.toString();
     }
     
-    
-    /*
     public String outputDepthFirstSearch(){
         StringBuilder str = new StringBuilder();
-        Trie temp = this;
-        TrieNode node = temp.getRoot();
-        TrieNode parent = null;
-        boolean visited;
-        for(int i = 0; i< 5; i++){
-            TrieNode child = node.getFirstChild();
-            if(child.hasChildren()){
-                visited = false;
-                parent = node;
-                node = child; 
-            }
-            else{
-                visited = true;
-                str.append(child.toString());
-                node.removeFirstChild();
-                node = parent;
-            }
+        Stack<TrieNode> s = new Stack();
+        s.push(this.root);
+        while(!s.isEmpty()) {
+                TrieNode child = s.peek().getUnvisitedChildNode();
+                if(child != null) {
+                        child.setVisited(true);
+                        s.push(child);
+                }
+                else
+                    str.append(s.pop().toString());
         }
         return str.toString();
     }
-    */
+    
     public Trie getSubTrie(String prefix){
         TrieNode node = root;
         for(int i = 0; i < prefix.length(); i++){
@@ -115,8 +112,56 @@ public class Trie extends TrieNode{
         }
         Trie trie = new Trie();
         trie.setRoot(node);
+        trie.getRoot().clearData();
         return trie;
     }
+    
+    /*
+    public String getAllWords(){
+        StringBuilder str = new StringBuilder();
+        List<String> l = new ArrayList();
+        Stack<TrieNode> s = new Stack();
+        s.push(this.root);
+        while(!s.isEmpty()) {
+                TrieNode child = s.peek().getUnvisitedChildNode();
+                if(child != null) {
+                        str.append(child.toString());
+                        if(child.isComplete()){
+                            l.add(str.toString());
+                            str = new StringBuilder();
+                        }
+                        child.setVisited(true);
+                        
+                        s.push(child);
+                        
+                }
+                else{
+                    s.pop();
+                }
+        }
+        return l.toString();
+    }
+    */
+    
+    public List<String> getAllWords(TrieNode node, String in){
+        List<String> list = new ArrayList<>();
+        StringBuilder str = new StringBuilder();
+        Stack<TrieNode> s = new Stack<>();
+        
+        str.append(in).append(node.getC());
+         
+        for(TrieNode t : node.getOffspring()){
+            if(t!=null) s.push(t);
+        } 
+        while(!s.empty()){
+            list.addAll(getAllWords(s.pop(),str.toString()));
+        }  
+        if(node.isComplete()){
+            list.add(str.toString());
+        } 
+        return list;
+    }
+    
     
     @Override
     public String toString(){
@@ -141,8 +186,11 @@ public class Trie extends TrieNode{
         trie.add("chat");
         trie.add("cat");
         trie.add("bat");
+       
         //System.out.println(trie.toString());
-        System.out.println(trie.getRoot().getFirstChild());
+        System.out.println("all words: " + trie.getAllWords(trie.getRoot(),"").toString());
+        //System.out.println("bfs: " + trie.outputBreadthFirstSearch());
+        //System.out.println("dfs: " + trie.outputDepthFirstSearch());
         
     }
 }
