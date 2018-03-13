@@ -23,9 +23,9 @@ public class Trie extends TrieNode{
     
     public Trie(){
         this.root = new TrieNode();
-        
     }
     
+
     public TrieNode getRoot(){
         return root;
     }
@@ -66,17 +66,16 @@ public class Trie extends TrieNode{
     
     public String outputBreadthFirstSearch(){
         StringBuilder str = new StringBuilder();
-        Queue<TrieNode> l = new LinkedList();
-        l.add(this.root);
-        while(!l.isEmpty()) {
-                TrieNode child = l.peek().getUnvisitedChildNode();
+        Queue<TrieNode> q = new LinkedList();
+        q.add(this.root);
+        while(!q.isEmpty()) {
+                TrieNode child = q.peek().getUnvisitedChildNode();
                 if(child != null) {
                         child.setVisited(true);
-                        l.add(child);
+                        q.add(child);
                 }
-                else {
-                        str.append(l.remove().toString());
-                }
+                else
+                    str.append(q.remove().toString());
         }
         return str.toString();
     }
@@ -91,9 +90,8 @@ public class Trie extends TrieNode{
                         child.setVisited(true);
                         s.push(child);
                 }
-                else {
-                        str.append(s.pop().toString());
-                }
+                else
+                    str.append(s.pop().toString());
         }
         return str.toString();
     }
@@ -138,9 +136,10 @@ public class Trie extends TrieNode{
         trie.add("chat");
         trie.add("cat");
         trie.add("bat");
+       
         //System.out.println(trie.toString());
         System.out.println("bfs: " + trie.outputBreadthFirstSearch());
-        System.out.println("dfs: " + trie.outputBreadthFirstSearch());
+        System.out.println("dfs: " + trie.outputDepthFirstSearch());
         
     }
 }
