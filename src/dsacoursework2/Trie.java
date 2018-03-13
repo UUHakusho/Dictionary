@@ -110,7 +110,34 @@ public class Trie extends TrieNode{
         }
         Trie trie = new Trie();
         trie.setRoot(node);
+        trie.getRoot().clearData();
         return trie;
+    }
+    
+    
+    public String getAllWords(){
+        StringBuilder str = new StringBuilder();
+        List<String> l = new ArrayList();
+        Stack<TrieNode> s = new Stack();
+        s.push(this.root);
+        while(!s.isEmpty()) {
+                TrieNode child = s.peek().getUnvisitedChildNode();
+                if(child != null) {
+                        str.append(child.toString());
+                        if(child.isComplete()){
+                            l.add(str.toString());
+                            str = new StringBuilder();
+                        }
+                        child.setVisited(true);
+                        
+                        s.push(child);
+                        
+                }
+                else{
+                    s.pop();
+                }
+        }
+        return l.toString();
     }
     
     @Override
@@ -138,8 +165,9 @@ public class Trie extends TrieNode{
         trie.add("bat");
        
         //System.out.println(trie.toString());
-        System.out.println("bfs: " + trie.outputBreadthFirstSearch());
-        System.out.println("dfs: " + trie.outputDepthFirstSearch());
+        System.out.println("all words: " + trie.getAllWords());
+        //System.out.println("bfs: " + trie.outputBreadthFirstSearch());
+        //System.out.println("dfs: " + trie.outputDepthFirstSearch());
         
     }
 }

@@ -1,0 +1,11 @@
+while stack isnt empty
+		child = first unvisited
+		
+		if child is complete
+			add str to list
+			clear str
+		else if child has no unvisited child
+			stack.pop()
+		else
+			s.push(child)
+			str.add(child)

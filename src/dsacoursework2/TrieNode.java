@@ -35,6 +35,10 @@ public class TrieNode {
         this.parent = newparent;
     }
     
+    public void clearData(){
+        this.c = '\u0000';
+    }
+    
     public void addChild(char nodeChar){
         int index = getIndex(nodeChar);
         TrieNode node = getChild(nodeChar);
