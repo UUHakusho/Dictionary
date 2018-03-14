@@ -43,14 +43,7 @@ public class Trie extends TrieNode{
             char c = key.charAt(i);
             if(node.getChild(c) == null){
                 node.addChild(c);
-<<<<<<< HEAD
             }    
-=======
-            }
-            if(i==key.length()-1){
-                node.setComplete(true);
-            }
->>>>>>> f4c71d7ebfbeb92064643cd7075d43aff5d707dd
             node.getChild(c).setParent(node);
             node = node.getChild(c);
         }
@@ -123,11 +116,7 @@ public class Trie extends TrieNode{
         return trie;
     }
     
-<<<<<<< HEAD
     /*
-=======
-    
->>>>>>> f4c71d7ebfbeb92064643cd7075d43aff5d707dd
     public String getAllWords(){
         StringBuilder str = new StringBuilder();
         List<String> l = new ArrayList();
@@ -152,7 +141,6 @@ public class Trie extends TrieNode{
         }
         return l.toString();
     }
-<<<<<<< HEAD
     */
     
     public List<String> getAllWords(TrieNode node, String in){
@@ -174,8 +162,6 @@ public class Trie extends TrieNode{
         return list;
     }
     
-=======
->>>>>>> f4c71d7ebfbeb92064643cd7075d43aff5d707dd
     
     @Override
     public String toString(){
@@ -202,11 +188,7 @@ public class Trie extends TrieNode{
         trie.add("bat");
        
         //System.out.println(trie.toString());
-<<<<<<< HEAD
         System.out.println("all words: " + trie.getAllWords(trie.getRoot(),"").toString());
-=======
-        System.out.println("all words: " + trie.getAllWords());
->>>>>>> f4c71d7ebfbeb92064643cd7075d43aff5d707dd
         //System.out.println("bfs: " + trie.outputBreadthFirstSearch());
         //System.out.println("dfs: " + trie.outputDepthFirstSearch());
         

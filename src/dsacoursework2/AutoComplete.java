@@ -69,8 +69,6 @@ public class AutoComplete {
         readWordsFromCSV("lotrQueries.csv");
         HashMap<String,Integer> map = df.getMap();
         
-        StringBuilder out = new StringBuilder();
-        
         Trie trie = new Trie();
         for(String word : map.keySet()){
             trie.add(word);   
@@ -78,13 +76,12 @@ public class AutoComplete {
         
         try (Scanner scan = new Scanner(new File("lotrQueries.csv"))) {
             while(scan.hasNextLine()){
-                out.append(outputProb(scan.nextLine(), trie,map));
-                out.append(System.getProperty("line.separator"));
+                System.out.println(outputProb(scan.next(), trie,map));
             }
         }
         
         FileWriter fw = new FileWriter( "output.txt" );
-        fw.write(out.toString());
+        //fw.write(out);
         fw.close();
     }
     
