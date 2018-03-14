@@ -49,27 +49,7 @@ public class TrieNode {
     public void removeChild(char nodeChar){
         this.offspring[getIndex(nodeChar)] = null;
     }
-    /*
-    @Override
-    public String toString(){
-        String newLine = System.getProperty("line.separator");
-        StringBuilder str = new StringBuilder();
-        str.append("Current Node: ");
-        if(this.c == '\u0000')
-            str.append("null");
-        else{
-            str.append(this.c);
-        }
-        str.append(newLine).append("Offspring: ");
-        for(TrieNode node : this.offspring){
-            if(node != null){
-                str.append(node.getC());                
-            }
-        }
-        str.append(newLine);
-        return str.toString();
-    }
-    */
+   
     @Override
     public String toString(){
         return Character.toString(this.getC());

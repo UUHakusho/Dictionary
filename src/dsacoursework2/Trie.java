@@ -116,32 +116,7 @@ public class Trie extends TrieNode{
         return trie;
     }
     
-    /*
-    public String getAllWords(){
-        StringBuilder str = new StringBuilder();
-        List<String> l = new ArrayList();
-        Stack<TrieNode> s = new Stack();
-        s.push(this.root);
-        while(!s.isEmpty()) {
-                TrieNode child = s.peek().getUnvisitedChildNode();
-                if(child != null) {
-                        str.append(child.toString());
-                        if(child.isComplete()){
-                            l.add(str.toString());
-                            str = new StringBuilder();
-                        }
-                        child.setVisited(true);
-                        
-                        s.push(child);
-                        
-                }
-                else{
-                    s.pop();
-                }
-        }
-        return l.toString();
-    }
-    */
+   
     
     public List<String> getAllWords(TrieNode node, String in){
         List<String> list = new ArrayList<>();
@@ -187,10 +162,7 @@ public class Trie extends TrieNode{
         trie.add("cat");
         trie.add("bat");
        
-        //System.out.println(trie.toString());
-        System.out.println("all words: " + trie.getAllWords(trie.getRoot(),"").toString());
-        //System.out.println("bfs: " + trie.outputBreadthFirstSearch());
-        //System.out.println("dfs: " + trie.outputDepthFirstSearch());
+        System.out.println(trie.contains("chat"));
         
     }
 }

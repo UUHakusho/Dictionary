@@ -63,6 +63,7 @@ public class AutoComplete {
      * 
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
+        StringBuilder out  = new StringBuilder();
         DictionaryFinder df=new DictionaryFinder();
         df.setList(readWordsFromCSV("lotr.csv"));
         df.formDictionary();
@@ -76,12 +77,13 @@ public class AutoComplete {
         
         try (Scanner scan = new Scanner(new File("lotrQueries.csv"))) {
             while(scan.hasNextLine()){
-                System.out.println(outputProb(scan.next(), trie,map));
+                out.append(outputProb(scan.nextLine(), trie,map));
+                out.append(System.getProperty("line.separator"));
             }
         }
-        
+        System.out.println(out.toString());
         FileWriter fw = new FileWriter( "output.txt" );
-        //fw.write(out);
+        fw.write(out.toString());
         fw.close();
     }
     
